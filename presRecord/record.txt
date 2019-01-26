@@ -1,0 +1,12 @@
+123 John Kennedy
+172 Lyndon Johnson
+265 Richard Nixon
+306 Gerald Ford
+497 Jimmy Carter
+500 Ronald Reagan
+668 George Bush
+701 Bill Clinton
+888 Barack Obama
+939 Donald Trump
+-1
+497 123 666 888
