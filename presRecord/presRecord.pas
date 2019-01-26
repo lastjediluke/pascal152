@@ -12,6 +12,8 @@ type
 		p_fname : names;
 		p_lname : names;
 	end;
+type
+	presArray = array[1..12] of presidentRecord;
 
 var 
 	f : file of char;
@@ -22,12 +24,70 @@ var
 	fnameCounter : integer;
 	lnameCounter : integer;
 	myRecord : presidentRecord;
-	presArray : array[1..12] of presidentRecord;
+	myPresArray : presArray;
+	
 
-procedure getFirstName();
+
+function getId(var a : ch_array; var pa : presidentRecord; i : integer) : integer;
 begin
+	while a[i] <> ' ' do
+	begin
+		pa.p_id[i] := a[i];
+		i := i + 1;
+	end;
+	getId := i + 1;
+end;
+
+function getFname(var a : ch_array; var pa : presidentRecord; i : integer) : integer;
+var 
+	fCount : integer;
+begin
+	fCount := 1;
+	while a[i] <> ' ' do
+	begin
+		pa.p_fname[fCount] := a[i];
+		i := i + 1;
+		fCount := fCount + 1;
+	end;
+	getFname := i + 1;
+end;
+
+function getLname(var a : ch_array; var pa : presidentRecord; i : integer) : integer;
+var 
+	lCount : integer;
+begin
+	lCount := 1;
+	while a[i] <> LineEnding do
+	begin
+		pa.p_lname[lCount] := a[i];
+		i := i + 1;
+		lCount := lCount + 1;
+	end;
+	getlname := i + 1;
+end;
+
+procedure fillRecord(var a : ch_array; var pa : presArray);
+
+var
+	i : integer;
+	paCount : integer;
+begin
+	i := 1;
+	paCount := 1;
+	while a[i] <> '-' do
+	begin
+		i := getId(a, presArray[paCount], i);
+
+		i := getFname(a, presArray[paCount], i);
+	
+		i := getLname(a, presArray[paCount], i);
+		paCount := paCount + 1;
+	end;
+	writeln(presArray);
 
 end;
+
+
 
 begin
 	i := 1;
@@ -46,42 +106,8 @@ begin
 	idCounter := 1;
 	fnameCounter := 1;
 	lnameCounter := 1;
-
-	while true do
-	begin
-		if myArray[i] = ' ' then
-		begin
-			break;
-		end;
-		myRecord.p_id[i] := myArray[i];
-		i := i + 1;
-	end;
-
-	i := i + 1;
-	while true do
-	begin
-		if myArray[i] = ' ' then
-		begin
-			break;
-		end;
-		myRecord.p_fname[fnameCounter] := myArray[i];
-		i := i + 1;
-		fnameCounter := fnameCounter + 1;
-	end;
-
-	i := i + 1;
-	while true do
-	begin
-		if myArray[i] = LineEnding then
-		begin
-			break;
-		end;
-		myRecord.p_lname[lnameCounter] := myArray[i];
-		i := i + 1;
-		lnameCounter := lnameCounter + 1;
-	end;
-
-	writeln(myRecord.p_lname);
+	
+	fillRecord(myArray, myPresArray);
 
 	{
 	while not eof(myArray) do
