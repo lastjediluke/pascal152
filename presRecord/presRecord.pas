@@ -194,6 +194,8 @@ begin
 
 	{ * i should = - at this point, so I need to add 3 to get it to the search items * }
 	i := i + 3;
+
+	{ * get my ids to search and return if I found them in my records * }
 	presidentSearch(myArray, myPresArray, i);
 	printPresidents(myPresArray);	
 end.
